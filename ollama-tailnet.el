@@ -47,6 +47,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'transient)
 (require 'gptel)
 (require 'ollama-tailnet-vars)
 (require 'ollama-tailnet-gptel)

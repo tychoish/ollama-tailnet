@@ -25,7 +25,7 @@
 (defcustom ollama-tailnet-fallback-strategy :prompt
   "Fallback strategy when a target tailnet node is unreachable.
 Options:
-`:prompt'     - Prompt user interactively via minibuffer to pick a reachable host.
+`:prompt'     - Prompt user via minibuffer to pick a reachable host.
 `:auto-local' - Fall back automatically to local laptop Ollama instance.
 `:error'      - Raise an immediate error."
   :type '(choice (const :tag "Prompt user" :prompt)
@@ -125,10 +125,10 @@ Options:
   "Register a tailnet node NAME (symbol or string) with PROPS plist.
 
 Recognized PROPS:
-`:host' or `:address' - Host string (e.g., \"derrida.tailnet-name.ts.net:11434\" or \"127.0.0.1:11434\")
+`:host' or `:address' - Host string (e.g., \"derrida.ts.net:11434\")
 `:default-model'     - String default model name (e.g., \"gemma4:27b\")
-`:models'            - List of model strings (e.g., '(\"gemma4:27b\" \"gemma4:32b\"))
-`:local-p'           - Boolean indicating if host is local (default: auto-detected)"
+`:models'            - List of model strings (e.g., \='(\"gemma4:27b\"))
+`:local-p'           - Non-nil if host is local (default: auto-detected)"
   (let* ((sym (if (symbolp name) name (intern (format "%s" name))))
          (addr (or (plist-get props :host) (plist-get props :address) "127.0.0.1:11434"))
          (def-mod (or (plist-get props :default-model) "gemma4:2b"))
@@ -170,7 +170,7 @@ Recognized PROPS:
 
 ;;;###autoload
 (defun ollama-tailnet-setup-laptop-presets ()
-  "Register standard laptop and server profiles from `ollama-tailnet-preset-profiles'."
+  "Register standard profiles from `ollama-tailnet-preset-profiles'."
   (interactive)
   (dolist (item ollama-tailnet-preset-profiles)
     (let* ((props (cdr item))

@@ -30,11 +30,10 @@
 
 ;;;###autoload
 (defun ollama-tailnet-resolve-model (host-model-spec)
-  "Resolve HOST-MODEL-SPEC string or symbol (e.g. \"derrida/default\", \"derrida/gemma4:32b\", or 'derrida/default)
-to a cons cell `(HOST-STRUCT . MODEL-NAME)'.
+  "Resolve HOST-MODEL-SPEC string or symbol to `(HOST-STRUCT . MODEL-NAME)'.
 
-If spec is a simple host name (e.g. \"derrida\"), model defaults to host's `default-model'.
-If host is omitted or not registered, applies `ollama-tailnet-fallback-strategy'."
+If spec is a simple host name, default to host's `default-model'.
+If host is omitted or unregistered, apply `ollama-tailnet-fallback-strategy'."
   (let* ((spec-str (cond
                     ((symbolp host-model-spec) (symbol-name host-model-spec))
                     ((stringp host-model-spec) (string-trim host-model-spec))
@@ -86,7 +85,7 @@ If host is omitted or not registered, applies `ollama-tailnet-fallback-strategy'
 ;;;###autoload
 (defun ollama-tailnet-get-gptel-backend (host-model-spec)
   "Return a gptel backend struct corresponding to HOST-MODEL-SPEC.
-HOST-MODEL-SPEC can be a string (e.g. \"derrida/default\") or symbol (e.g. 'derrida/default)."
+HOST-MODEL-SPEC can be a string (e.g. \"derrida/default\") or symbol."
   (pcase-let ((`(,host-struct . ,model-name) (ollama-tailnet-resolve-model host-model-spec)))
     (let* ((host-sym (ollama-tailnet-host-name host-struct))
            (host-addr (ollama-tailnet-host-address host-struct))

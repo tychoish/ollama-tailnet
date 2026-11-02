@@ -255,5 +255,13 @@
     (ollama-tailnet-models-mode)
     (should-error (ollama-tailnet--model-at-point) :type 'user-error)))
 
+(ert-deftest ollama-tailnet-test-mode-toggle ()
+  "Test ollama-tailnet-mode enables and disables bindings."
+  (let ((hud-robot-ollama-tailnet-map (make-sparse-keymap)))
+    (ollama-tailnet-mode 1)
+    (should (keymap-lookup hud-robot-ollama-tailnet-map "s"))
+    (ollama-tailnet-mode -1)
+    (should-not (keymap-lookup hud-robot-ollama-tailnet-map "s"))))
+
 (provide 'test-ollama-tailnet)
 ;;; test-ollama-tailnet.el ends here

@@ -256,22 +256,19 @@ Returns an alist of (name . summary)."
          (ollama-tailnet--format-modified (ollama-tailnet-model-modified model))
          (ollama-tailnet--status-string model))))
 
-(defvar ollama-tailnet-models-mode-map
-  (let ((map (make-sparse-keymap)))
-    (set-keymap-parent map tabulated-list-mode-map)
-    map)
-  "Keymap for `ollama-tailnet-models-mode'.")
-
-(define-key ollama-tailnet-models-mode-map (kbd "p")   #'ollama-tailnet-models-pull)
-(define-key ollama-tailnet-models-mode-map (kbd "u")   #'ollama-tailnet-models-upgrade)
-(define-key ollama-tailnet-models-mode-map (kbd "d")   #'ollama-tailnet-models-delete)
-(define-key ollama-tailnet-models-mode-map (kbd "c")   #'ollama-tailnet-models-check-update)
-(define-key ollama-tailnet-models-mode-map (kbd "C")   #'ollama-tailnet-models-check-update-all)
-(define-key ollama-tailnet-models-mode-map (kbd "s")   #'ollama-tailnet-search-model)
-(define-key ollama-tailnet-models-mode-map (kbd "g")   #'ollama-tailnet-models-refresh)
-(define-key ollama-tailnet-models-mode-map (kbd "RET") #'ollama-tailnet-models-show-info)
-(define-key ollama-tailnet-models-mode-map (kbd "?")   #'ollama-tailnet-models-menu)
-(define-key ollama-tailnet-models-mode-map (kbd "q")   #'quit-window)
+(defvar-keymap ollama-tailnet-models-mode-map
+  :doc "Keymap for `ollama-tailnet-models-mode'."
+  :parent tabulated-list-mode-map
+  "p"   #'ollama-tailnet-models-pull
+  "u"   #'ollama-tailnet-models-upgrade
+  "d"   #'ollama-tailnet-models-delete
+  "c"   #'ollama-tailnet-models-check-update
+  "C"   #'ollama-tailnet-models-check-update-all
+  "s"   #'ollama-tailnet-search-model
+  "g"   #'ollama-tailnet-models-refresh
+  "RET" #'ollama-tailnet-models-show-info
+  "?"   #'ollama-tailnet-models-menu
+  "q"   #'quit-window)
 
 ;;;###autoload
 (define-derived-mode ollama-tailnet-models-mode tabulated-list-mode "Ollama-Tailnet"

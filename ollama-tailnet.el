@@ -67,8 +67,16 @@
     (keymap-set hud-robot-ollama-tailnet-map "l" #'ollama-tailnet-models)
     (keymap-set hud-robot-ollama-tailnet-map "S" #'ollama-tailnet-search-model)))
 
-;; Bind HUD keys at load time if map exists
-(ollama-tailnet-bind-hud-keys)
+;;;###autoload
+(define-minor-mode ollama-tailnet-mode
+  "Global minor mode for `ollama-tailnet' integrations."
+  :global t
+  :group 'ollama-tailnet
+  (if ollama-tailnet-mode
+      (ollama-tailnet-bind-hud-keys)
+    (when (boundp 'hud-robot-ollama-tailnet-map)
+      (dolist (k '("s" "d" "p" "r" "t" "b" "l" "S"))
+        (keymap-unset hud-robot-ollama-tailnet-map k t)))))
 
 (provide 'ollama-tailnet)
 ;;; ollama-tailnet.el ends here

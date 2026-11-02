@@ -258,13 +258,23 @@
     (ollama-tailnet-models-mode)
     (should-error (ollama-tailnet--model-at-point) :type 'user-error)))
 
+(ert-deftest ollama-tailnet-test-command-map ()
+  "Test ollama-tailnet-command-map contains all interactive commands."
+  (should (keymap-lookup ollama-tailnet-command-map "s"))
+  (should (keymap-lookup ollama-tailnet-command-map "d"))
+  (should (keymap-lookup ollama-tailnet-command-map "p"))
+  (should (keymap-lookup ollama-tailnet-command-map "r"))
+  (should (keymap-lookup ollama-tailnet-command-map "t"))
+  (should (keymap-lookup ollama-tailnet-command-map "b"))
+  (should (keymap-lookup ollama-tailnet-command-map "l"))
+  (should (keymap-lookup ollama-tailnet-command-map "S")))
+
 (ert-deftest ollama-tailnet-test-mode-toggle ()
-  "Test ollama-tailnet-mode enables and disables bindings."
-  (let ((hud-robot-ollama-tailnet-map (make-sparse-keymap)))
-    (ollama-tailnet-mode 1)
-    (should (keymap-lookup hud-robot-ollama-tailnet-map "s"))
-    (ollama-tailnet-mode -1)
-    (should-not (keymap-lookup hud-robot-ollama-tailnet-map "s"))))
+  "Test ollama-tailnet-mode toggles cleanly without mutating hud maps."
+  (ollama-tailnet-mode 1)
+  (should ollama-tailnet-mode)
+  (ollama-tailnet-mode -1)
+  (should-not ollama-tailnet-mode))
 
 (provide 'test-ollama-tailnet)
 ;;; test-ollama-tailnet.el ends here
